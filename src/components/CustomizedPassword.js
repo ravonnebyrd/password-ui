@@ -14,7 +14,9 @@ function CustomizedPassword(){
     let [numbers, setNumbers] = useState('');
     let [customPassword, setCustomPassword] = useState([]);
 
-    const getCustomPassword = async () => {
+    const getCustomPassword = async (event) => {
+
+        event.preventDefault();
 
         const formData = new FormData();
         formData.append("length", length);
@@ -49,7 +51,7 @@ function CustomizedPassword(){
     return(
         <>
             <div>
-                <form onSubmit={getCustomPassword}>
+                <form onSubmit={getCustomPassword} enctype="multipart/form-data">
                     <p>Choose this option if you want a customized password.</p>
 
                     <label htmlFor="length">Length</label>
