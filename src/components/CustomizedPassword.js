@@ -18,17 +18,14 @@ function CustomizedPassword(){
 
         event.preventDefault();
 
-        const formData = new FormData();
-        formData.append("length", length);
-        formData.append("symbols", symbols);
-        formData.append("uppercase", uppercase);
-        formData.append("lowercase", lowercase);
-        formData.append("numbers", numbers);
+
+        const request = {length, symbols, uppercase, lowercase, numbers}
 
         const response = await fetch('https://password-server.herokuapp.com/password', {
             method: 'POST',
             mode: 'cors',
-            body: formData
+            body: JSON.stringify(request),
+            headers: {'Content-Type': 'application/json',}
         });
 
         if (response.status === 200){
@@ -51,7 +48,7 @@ function CustomizedPassword(){
     return(
         <>
             <div>
-                <form onSubmit={getCustomPassword} enctype="multipart/form-data">
+                <form onSubmit={getCustomPassword}>
                     <p>Choose this option if you want a customized password.</p>
 
                     <label htmlFor="length">Length</label>
