@@ -9,18 +9,24 @@ import Col from 'react-bootstrap/Col';
 function App() {
   return (
     <div className="App">
+
+        <br></br>
+        <br></br>
+
         <Container>
             <Row>
-                <Col>
+                <Col className='text-center title-pw'>
                     <h1>Password Generator</h1>
                 </Col>
             </Row>
         </Container>
 
+        <br></br>
+
         <Container>
             <Row>
                 <Col>
-                    <RandomPassword />
+                        <RandomPassword />
                 </Col>
             </Row>
         
@@ -28,7 +34,7 @@ function App() {
 
             <Row>
                 <Col>
-                    <CustomizedPassword />
+                    <CustomizedPassword className='custom'/>
                 </Col>
             </Row>
 

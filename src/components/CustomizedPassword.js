@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 /* 
     Citation: https://github.com/jasoncartera/writersblock_cs340/blob/main/ui/src/components/readers/InsertReader.js
@@ -24,7 +25,9 @@ function CustomizedPassword(){
     let [uppercase, setUppercase] = useState(false);
     let [lowercase, setLowercase] = useState(false);
     let [numbers, setNumbers] = useState(false);
+
     let [customPassword, setCustomPassword] = useState('');
+    let [copyPassword, setCopyPassword] = useState(false);
 
     const [checkedSymbols, setCheckedSymbols] = useState(false);
     const [checkedUppercase, setCheckedUppercase] = useState(false);
@@ -65,9 +68,15 @@ function CustomizedPassword(){
 
         event.preventDefault();
 
-        if (length === 0){
-            alert('Please select a length');
+        if (symbols === false && uppercase === false && lowercase === false && numbers === false && length === 0){
+            alert('Please select a length and at least one character type.');
             return; 
+        } else if (length === 0){
+            alert('Plese select a length.');
+            return;
+        } else if (symbols === false && uppercase === false && lowercase === false && numbers === false) {
+            alert('Please select at least one character type.');
+            return;
         }
 
         const request = {length, symbols, uppercase, lowercase, numbers}
@@ -119,36 +128,42 @@ function CustomizedPassword(){
         setCheckedUppercase(false);
         setCheckedLowercase(false);
         setCheckedNumbers(false);
+
+        setCopyPassword(false);
     }
 
     return(
-        <>
+        <Container className='custom'>
             <Row>
-                <Col>
-                    <h2>Custom Password</h2>
+                <Col className='text-center'>
+                    <h3>Custom Password</h3>
                 </Col>
             </Row>
 
             <Row>
-                <Col>
-                    <h3>Choose this option if you want a customized password, of certain length and types of characters.</h3>
+                <Col className='text-center'>
+                    <h5>Choose this option if you want a customized password, of certain length and types of characters.</h5>
                 </Col>
             </Row>
-            <Row>
-                <Container>
 
-                    <Form onSubmit={getCustomPassword}>
-                        <Form.Group controlId="length">
+            <br></br>
+
+            <Form onSubmit={getCustomPassword}>
+                <Row className='d-flex justify-content-center'>
+                
+                    <Col lg={1} >
+                        <Form.Group  controlId="length">
                             <Form.Label>Length</Form.Label>
                             <Form.Control type="number" placeholder="Enter length"  value={length} min={0} onChange={e => setLength(e.target.value)}/>
                             <Form.Text className="text-muted">
                                 Required.
                             </Form.Text>
                         </Form.Group>
-
-                        <br></br>
-
+                    </Col>
+                    <Col lg={6} >
                         <Form.Group controlId="checkboxes">
+                            <Form.Label>Included Characters</Form.Label>
+                            <br></br>
                             <Form.Switch inline size="lg" label="Symbols" value={symbols} checked={checkedSymbols} onChange={e => updateSymbols(e)}/>
                             <Form.Switch inline size="lg" label="Lowercase" value={lowercase} checked={checkedLowercase} onChange={e => updateLowercase(e)}/>
                             <Form.Switch inline size="lg" label="Uppercase" value={uppercase} checked={checkedUppercase} onChange={e => updateUppercase(e)}/>
@@ -158,9 +173,13 @@ function CustomizedPassword(){
                                 Please select at least one (1) switch option. 
                             </Form.Text>
                         </Form.Group>
+                    </Col>
+                </Row>
 
-                        <br></br>
-
+                <br></br>
+                
+                <Row>
+                    <Col className='d-flex justify-content-center'>
                         <Stack direction="horizontal" gap={3}>
                             <Button size="sm" variant="outline-primary" type="submit" onClick={getCustomPassword}>
                                 Get Custom Password
@@ -170,21 +189,31 @@ function CustomizedPassword(){
                             <Button size="sm" variant="outline-secondary" type="submit" onClick={e => clear(e)}>
                                 Clear Password & Options
                             </Button>
+
+                            {customPassword.password ? 
+                            <CopyToClipboard text={customPassword.password} onCopy={() => setCopyPassword(true)}>
+                                <Button size="sm" variant="outline-success">
+                                    Copy Password
+                                </Button>
+                            </CopyToClipboard> : 
+                            <CopyToClipboard text={customPassword.password} onCopy={() => setCopyPassword(true)} disabled>
+                            <Button size="sm" variant="outline-success">
+                                Copy Password
+                            </Button>
+                            </CopyToClipboard>}
                         </Stack>
-
-                    </Form>
-
-                </Container>
-            </Row>
+                    </Col>
+                </Row>
+            </Form>
 
             <br></br>
-            
+
             <Row>
-                <Col>
-                    <p><span>{customPassword.password}</span></p>
+                <Col className='text-center'>
+                    <p>New Password Here: &nbsp; <span>{customPassword.password}</span>{copyPassword ? <span style={{color: 'green'}}>&nbsp; Copied.</span> : null}</p>
                 </Col>
             </Row>
-        </>
+        </Container>
     );
 }
 
