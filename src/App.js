@@ -17,7 +17,7 @@ function App() {
         <Container>
             <Row>
                 <Col className='text-center title-pw'>
-                    <h1>Password Generator</h1>
+                    <h1>Username & Password Generator</h1>
                 </Col>
             </Row>
         </Container>
@@ -25,6 +25,15 @@ function App() {
         <br></br>
 
         <Container>
+
+            <Row>
+                <Col>
+                    <RandomUsername />
+                </Col>
+            </Row>
+
+            <br></br>
+
             <Row>
                 <Col>
                         <RandomPassword />
@@ -36,14 +45,6 @@ function App() {
             <Row>
                 <Col>
                     <CustomizedPassword />
-                </Col>
-            </Row>
-
-            <br></br>
-
-            <Row>
-                <Col>
-                    <RandomUsername />
                 </Col>
             </Row>
 
