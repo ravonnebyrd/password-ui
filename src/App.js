@@ -1,6 +1,7 @@
 
 import { Container } from 'react-bootstrap';
 import './App.css';
+import PasswordStrength from './components/PasswordStrength';
 import CustomizedPassword from './components/CustomizedPassword';
 import RandomPassword from './components/RandomPassword';
 import RandomPassphrase from './components/RandomPassphrase';
@@ -37,7 +38,7 @@ function App() {
 
             <Row>
                 <Col>
-                        <RandomPassword />
+                    <RandomPassword />
                 </Col>
             </Row>
             <br></br>
@@ -53,6 +54,14 @@ function App() {
             <Row>
                 <Col>
                     <CustomizedPassword />
+                </Col>
+            </Row>
+
+            <br></br>
+
+            <Row>
+                <Col>
+                    <PasswordStrength />
                 </Col>
             </Row>
 

@@ -77,7 +77,7 @@ function RandomPassphrase(){
             <Form onSubmit={getRandomPassphrase}>
                 <Row className='d-flex justify-content-center'>
                 
-                    <Col lg={1} >
+                    <Col lg={3} >
                         <Form.Group  controlId="length">
                             <Form.Label>Words</Form.Label>
                             <Form.Control type="number" placeholder="Enter length"  value={number} min={0} onChange={e => setNumber(e.target.value)}/>
